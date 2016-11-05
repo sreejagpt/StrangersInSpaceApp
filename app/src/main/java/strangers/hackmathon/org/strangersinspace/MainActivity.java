@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String partyCode = ((EditText) findViewById(R.id.editText)).getText().toString();
-                if (partyCode.equals("5429T") || true) {
+                if (partyCode.equals("5429T")) {
                     Intent myIntent = new Intent(getApplicationContext(), PartyGesturesActivity.class);
                     startActivity(myIntent);
                 }
