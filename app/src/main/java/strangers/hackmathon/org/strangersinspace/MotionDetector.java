@@ -3,7 +3,7 @@ package strangers.hackmathon.org.strangersinspace;
 import java.util.List;
 
 public class MotionDetector {
-    public boolean isKnock(List<SensorValue> sensorValues) {
+    public static boolean isKnock(List<SensorValue> sensorValues) {
         for (SensorValue sensorValue: sensorValues) {
             if (sensorValue.sensorType.equals("android.sensor.gyroscope")) {
                 return false;
@@ -12,11 +12,15 @@ public class MotionDetector {
         return true;
     }
 
-    public boolean isButtTap(List<SensorValue> sensorValues) {
+    public static boolean isButtTap(List<SensorValue> sensorValues) {
+        int gyroCount = 0;
         for (SensorValue sensorValue: sensorValues) {
             if (sensorValue.sensorType.equals("android.sensor.gyroscope")) {
-                return true;
+                gyroCount++;
             }
+        }
+        if (gyroCount > (sensorValues.size() / 2)) {
+            return true;
         }
         return false;
     }

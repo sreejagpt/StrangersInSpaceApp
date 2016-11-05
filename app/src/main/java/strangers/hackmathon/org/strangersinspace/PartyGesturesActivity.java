@@ -10,6 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.apache.commons.lang3.time.StopWatch;
 
 import java.util.ArrayList;
@@ -62,9 +69,17 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
     }
 
     public void onSensorChanged(SensorEvent event) {
-        if (isPhoneSensing && stopWatch.getTime() > 5000) {
+        if (isPhoneSensing && stopWatch.getTime() > 1000) {
             stopWatch.reset();
             isPhoneSensing = false;
+            if (MotionDetector.isKnock(gestureValues)) {
+                Log.d(DEBUG_TAG, "~~~~~~~~~KNOCK~~~~~~~~~");
+                voteForGenre("hiphop");
+            } else if (MotionDetector.isButtTap(gestureValues)) {
+                Log.d(DEBUG_TAG, "****************BUTT TAP*************");
+                voteForGenre("funk");
+            }
+            gestureValues = new ArrayList<>();
             Log.d(DEBUG_TAG, "Stopped watch, now examining array of values");
         }
         mGravity = event.values.clone();
@@ -83,10 +98,26 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
                 stopWatch.start();
                 gestureValues.add(new SensorValue(event.sensor.getStringType(), mAccel));
             }
-            Log.d(DEBUG_TAG, "========== " + event.sensor.getStringType() + " ============");
-            Log.d(DEBUG_TAG, "mAccel = " + mAccel);
         }
     }
 
+    private void voteForGenre(String genre) {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "https://strangers-in-space.herokuapp.com/" + genre;
 
+        // Request a string response from the provided URL.
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Display the first 500 characters of the response string.
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        });
+        // Add the request to the RequestQueue.
+        queue.add(stringRequest);
+    }
 }
