@@ -26,10 +26,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_code"
             android:id="@+id/editText" />
-
         <Button
+            android:id="@id/partyButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="@string/party" />
+            android:text="@string/party"/>
     </LinearLayout>
 </RelativeLayout>
