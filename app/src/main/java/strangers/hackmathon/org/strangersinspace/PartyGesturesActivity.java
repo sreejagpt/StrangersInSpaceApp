@@ -48,7 +48,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
         super.onResume();
         gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_FASTEST);
+        mSensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
@@ -63,7 +63,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
     public void onSensorChanged(SensorEvent event) {
         if (isPhoneSensing && stopWatch.getTime() > 5000) {
-            stopWatch.stop();
+            stopWatch.reset();
             isPhoneSensing = false;
             Log.d(DEBUG_TAG, "Stopped watch, now examining array of values");
         }
@@ -77,7 +77,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
         mAccel = mAccel * 0.9f + delta;
         // Make this higher or lower according to how much
         // motion you want to detect
-        if (mAccel > 25) {
+        if (mAccel > 25 || mAccel < 0) {
             if (!isPhoneSensing) {
                 isPhoneSensing = true;
                 stopWatch.start();
