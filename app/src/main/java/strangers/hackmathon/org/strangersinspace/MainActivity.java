@@ -1,17 +1,13 @@
 package strangers.hackmathon.org.strangersinspace;
 
-import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 
 import static java.lang.Math.sqrt;
 
@@ -31,16 +27,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private float mAccel;
     private float mAccelCurrent;
     private float mAccelLast;
-    private String debug;
+    private String debug = "[DEBUG]";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-
-        gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
@@ -48,21 +41,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     protected void onResume() {
         super.onResume();
-        mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-        mSensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
+//        gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+//        accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        mSensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_FASTEST);
+//        mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+
     }
 
     protected void onPause() {
@@ -75,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
     public void onSensorChanged(SensorEvent event) {
-        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER){
+
             mGravity = event.values.clone();
             // Shake detection
             float x = mGravity[0];
@@ -87,11 +74,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             mAccel = mAccel * 0.9f + delta;
             // Make this higher or lower according to how much
             // motion you want to detect
-            if(mAccel > 3){
-                debug = "[DEBUG]";
-                Log.d(debug, "mAccel = " + mAccel);
+            if(mAccel > 2) {
+                Log.d(debug, "========== " + event.sensor.getStringType() + " ============");
+                Log.d(debug, "x = " + x + "y = " + y + " z= " + z);
             }
         }
-    }
+
 
 }
