@@ -120,47 +120,6 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
-//
-//    public void onSensorChanged(SensorEvent event) {
-//        if (isPhoneSensing && stopWatch.getTime() > 1000) {
-//            stopWatch.reset();
-//            isPhoneSensing = false;
-//            if (MotionDetector.isKnock(gestureValues)) {
-//                Log.d(DEBUG_TAG, "~~~~~~~~~KNOCK~~~~~~~~~");
-//                voteForGenre("hiphop");
-//                Button hipHopButton = (Button) findViewById(R.id.hiphopButton);
-//                hipHopButton.setBackgroundColor(Color.CYAN);
-//                Button funkButton = (Button) findViewById(R.id.funkButton);
-//                funkButton.setBackgroundColor(Color.LTGRAY);
-//            } else if (MotionDetector.isButtTap(gestureValues)) {
-//                Log.d(DEBUG_TAG, "****************BUTT TAP*************");
-//                Button funkButton = (Button) findViewById(R.id.funkButton);
-//                funkButton.setBackgroundColor(Color.CYAN);
-//                Button hipHopButton = (Button) findViewById(R.id.hiphopButton);
-//                hipHopButton.setBackgroundColor(Color.LTGRAY);
-//                voteForGenre("funk");
-//            }
-//            gestureValues = new ArrayList<>();
-//            Log.d(DEBUG_TAG, "Stopped watch, now examining array of values");
-//        }
-//        mGravity = event.values.clone();
-//        float x = mGravity[0];
-//        float y = mGravity[1];
-//        float z = mGravity[2];
-//        mAccelLast = mAccelCurrent;
-//        mAccelCurrent = (float) sqrt(x * x + y * y + z * z);
-//        float delta = mAccelCurrent - mAccelLast;
-//        mAccel = mAccel * 0.9f + delta;
-//        // Make this higher or lower according to how much
-//        // motion you want to detect
-//        if (mAccel > 25 || mAccel < 0) {
-//            if (!isPhoneSensing) {
-//                isPhoneSensing = true;
-//                stopWatch.start();
-//                gestureValues.add(new SensorValue(event.sensor.getStringType(), mAccel));
-//            }
-//        }
-//    }
 
     private void voteForGenre(String genre) {
         RequestQueue queue = Volley.newRequestQueue(this);
