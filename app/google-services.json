@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "748579681540",
+    "firebase_url": "https://strangers-in-space.firebaseio.com",
+    "project_id": "strangers-in-space",
+    "storage_bucket": "strangers-in-space.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:748579681540:android:e681f085100c67f0",
+        "android_client_info": {
+          "package_name": "strangers.hackmathon.org.strangersinspace"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "748579681540-ass9fvhkrinvec2egfn9qo7fgbrlc824.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9izbXywLCyZTjs_t57IYjWvBdsoqXDAQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
