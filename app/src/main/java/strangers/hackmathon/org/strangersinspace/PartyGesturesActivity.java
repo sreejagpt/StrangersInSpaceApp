@@ -8,7 +8,6 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -65,13 +64,13 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
     public void onSensorChanged(SensorEvent event) {
         long newDate = event.timestamp;
         if (newDate - lastDate > 2000000000) {
-            Log.d(DEBUG_TAG, "2 seconds later");
+            //Log.d(DEBUG_TAG, "2 seconds later");
             lastDate = newDate;
             if (gestureCount.get(KNOCK) > gestureCount.get(BUTTTAP)) {
-                Log.d("GESTURE", "KNOCK! ==================" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
+                //Log.d("GESTURE", "KNOCK! ==================" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
                 voteForGenre("hiphop");
             } else if (gestureCount.get(KNOCK) < gestureCount.get(BUTTTAP)) {
-                Log.d("GESTURE", "BUTT TAP! *****************" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
+                //Log.d("GESTURE", "BUTT TAP! *****************" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
                 voteForGenre("funk");
             }
             gestureCount.put(KNOCK, 0);
