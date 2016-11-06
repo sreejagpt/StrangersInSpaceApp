@@ -32,22 +32,22 @@
         android:orientation="horizontal"
         tools:context=".GridXMLActivity" >
         <Button
-            android:id="@id/partyButton"
+            android:id="@id/rockButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/Rock"/>
         <Button
-            android:id="@id/partyButton"
+            android:id="@id/funkButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/Funk"/>
         <Button
-            android:id="@id/partyButton"
+            android:id="@id/hiphopButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/HipHop"/>
         <Button
-            android:id="@id/partyButton"
+            android:id="@id/raveButton"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/Rave"/>

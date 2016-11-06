@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="partyButton" type="id">partyButton</item>
+    <item name="hiphopButton" type="id">hiphopButton</item>
+    <item name="raveButton" type="id">raveButton</item>
+    <item name="funkButton" type="id">funkButton</item>
+    <item name="rockButton" type="id">rockButton</item>
 </resources>

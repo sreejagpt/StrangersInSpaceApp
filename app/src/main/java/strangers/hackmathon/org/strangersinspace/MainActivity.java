@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.messaging.FirebaseMessaging;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -27,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String partyCode = ((EditText) findViewById(R.id.editText)).getText().toString();
                 if (partyCode.equals("5429T")) {
+                    FirebaseMessaging.getInstance().subscribeToTopic("themeChange");
                     Intent myIntent = new Intent(getApplicationContext(), PartyGesturesActivity.class);
                     startActivity(myIntent);
                 }

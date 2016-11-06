@@ -1,6 +1,7 @@
 package strangers.hackmathon.org.strangersinspace;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -75,8 +77,16 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
             if (MotionDetector.isKnock(gestureValues)) {
                 Log.d(DEBUG_TAG, "~~~~~~~~~KNOCK~~~~~~~~~");
                 voteForGenre("hiphop");
+                Button hipHopButton = (Button) findViewById(R.id.hiphopButton);
+                hipHopButton.setBackgroundColor(Color.CYAN);
+                Button funkButton = (Button) findViewById(R.id.funkButton);
+                funkButton.setBackgroundColor(Color.LTGRAY);
             } else if (MotionDetector.isButtTap(gestureValues)) {
                 Log.d(DEBUG_TAG, "****************BUTT TAP*************");
+                Button funkButton = (Button) findViewById(R.id.funkButton);
+                funkButton.setBackgroundColor(Color.CYAN);
+                Button hipHopButton = (Button) findViewById(R.id.hiphopButton);
+                hipHopButton.setBackgroundColor(Color.LTGRAY);
                 voteForGenre("funk");
             }
             gestureValues = new ArrayList<>();
@@ -103,7 +113,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
     private void voteForGenre(String genre) {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://strangers-in-space.herokuapp.com/" + genre;
+        String url = "https://strangers-in-space.herokuapp.com/vote/" + genre;
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -117,7 +127,6 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
             public void onErrorResponse(VolleyError error) {
             }
         });
-        // Add the request to the RequestQueue.
         queue.add(stringRequest);
     }
 }
