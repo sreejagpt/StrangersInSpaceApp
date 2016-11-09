@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -16,8 +17,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import strangers.hackmathon.org.strangersinspace.motion.Delta;
+import strangers.hackmathon.org.strangersinspace.motion.MotionDetector;
 
 public class PartyGesturesActivity extends AppCompatActivity implements SensorEventListener {
     public static final String KNOCK = "KNOCK";
@@ -33,6 +39,8 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
     private double lastAccelerationX = 0;
     private double lastAccelerationY = 0;
     private double lastAccelerationZ = 0;
+
+    List<Delta> deltas = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,47 +74,83 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
         if (newDate - lastDate > 2000000000) {
             //Log.d(DEBUG_TAG, "2 seconds later");
             lastDate = newDate;
-            if (gestureCount.get(KNOCK) > gestureCount.get(BUTTTAP)) {
-                //Log.d("GESTURE", "KNOCK! ==================" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
-                voteForGenre("hiphop");
-            } else if (gestureCount.get(KNOCK) < gestureCount.get(BUTTTAP)) {
-                //Log.d("GESTURE", "BUTT TAP! *****************" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
-                voteForGenre("funk");
-            }
-            gestureCount.put(KNOCK, 0);
-            gestureCount.put(BUTTTAP, 0);
-        } else {
-            final float alpha = 0.8f;
-
-            double[] gravity = new double[3];
-            double[] linear_acceleration = new double[3];
-
-            gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
-            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
-            gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
-
-            linear_acceleration[0] = event.values[0] - gravity[0];
-            linear_acceleration[1] = event.values[1] - gravity[1];
-            linear_acceleration[2] = event.values[2] - gravity[2];
-
-            double deltaX = linear_acceleration[0] - lastAccelerationX;
-
-            double deltaY = linear_acceleration[1] - lastAccelerationY;
-            double deltaZ = linear_acceleration[2] - lastAccelerationZ;
-
-            lastAccelerationX = linear_acceleration[0];
-            lastAccelerationY = linear_acceleration[1];
-            lastAccelerationZ = linear_acceleration[2];
-
-
-
-            if (deltaX > 1 && deltaY > 1 && deltaZ < 5) {
-                incrementGestureOfType(KNOCK);
-            } else if (deltaZ > 6) {
-                incrementGestureOfType(BUTTTAP);
-            }
+            Log.d(DEBUG_TAG, "================================================");
+            MotionDetector.deriveMotion(deltas);
+            deltas.clear();
         }
+        final float alpha = 0.8f;
+
+        double[] gravity = new double[3];
+        double[] linear_acceleration = new double[3];
+        gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+        gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+        gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+
+        linear_acceleration[0] = event.values[0] - gravity[0];
+        linear_acceleration[1] = event.values[1] - gravity[1];
+        linear_acceleration[2] = event.values[2] - gravity[2];
+
+        double deltaX = linear_acceleration[0] - lastAccelerationX;
+
+        double deltaY = linear_acceleration[1] - lastAccelerationY;
+        double deltaZ = linear_acceleration[2] - lastAccelerationZ;
+
+        lastAccelerationX = linear_acceleration[0];
+        lastAccelerationY = linear_acceleration[1];
+        lastAccelerationZ = linear_acceleration[2];
+
+        Delta delta = new Delta(deltaX, deltaY, deltaZ);
+        deltas.add(delta);
+
     }
+
+//    @Override
+//    public void onSensorChanged(SensorEvent event) {
+//        long newDate = event.timestamp;
+//        if (newDate - lastDate > 2000000000) {
+//            //Log.d(DEBUG_TAG, "2 seconds later");
+//            lastDate = newDate;
+//            if (gestureCount.get(KNOCK) > gestureCount.get(BUTTTAP)) {
+//                Log.d("GESTURE", "KNOCK! ==================" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
+////                voteForGenre("hiphop");
+//            } else if (gestureCount.get(KNOCK) < gestureCount.get(BUTTTAP)) {
+//                Log.d("GESTURE", "BUTT TAP! *****************" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
+////                voteForGenre("funk");
+//            }
+//            gestureCount.put(KNOCK, 0);
+//            gestureCount.put(BUTTTAP, 0);
+//        } else {
+//            final float alpha = 0.8f;
+//
+//            double[] gravity = new double[3];
+//            double[] linear_acceleration = new double[3];
+//
+//            gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
+//            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
+//            gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
+//
+//            linear_acceleration[0] = event.values[0] - gravity[0];
+//            linear_acceleration[1] = event.values[1] - gravity[1];
+//            linear_acceleration[2] = event.values[2] - gravity[2];
+//
+//            double deltaX = linear_acceleration[0] - lastAccelerationX;
+//
+//            double deltaY = linear_acceleration[1] - lastAccelerationY;
+//            double deltaZ = linear_acceleration[2] - lastAccelerationZ;
+//
+//            lastAccelerationX = linear_acceleration[0];
+//            lastAccelerationY = linear_acceleration[1];
+//            lastAccelerationZ = linear_acceleration[2];
+//
+//
+//
+//            if (deltaX > 1 && deltaY > 1 && deltaZ < 10) {
+//                incrementGestureOfType(KNOCK);
+//            } else if (deltaZ > 6) {
+//                incrementGestureOfType(BUTTTAP);
+//            }
+//        }
+//    }
 
     private void incrementGestureOfType(String gestureType) {
         int vote = 1;
