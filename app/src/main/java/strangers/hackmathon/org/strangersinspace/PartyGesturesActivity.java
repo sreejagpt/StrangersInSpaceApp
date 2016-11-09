@@ -71,7 +71,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
     @Override
     public void onSensorChanged(SensorEvent event) {
         long newDate = event.timestamp;
-        if (newDate - lastDate > 2000000000) {
+        if (newDate - lastDate > 3000000000l) {
             //Log.d(DEBUG_TAG, "2 seconds later");
             lastDate = newDate;
             Log.d(DEBUG_TAG, "================================================");
