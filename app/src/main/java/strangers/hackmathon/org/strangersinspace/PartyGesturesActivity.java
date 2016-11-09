@@ -28,6 +28,7 @@ import strangers.hackmathon.org.strangersinspace.motion.MotionDetector;
 public class PartyGesturesActivity extends AppCompatActivity implements SensorEventListener {
     public static final String KNOCK = "KNOCK";
     public static final String BUTTTAP = "BUTTTAP";
+    public static final String CIRCLE = "CIRCLE";
     private SensorManager mSensorManager;
     private Sensor gyroscope;
     private Sensor accelerometer;
@@ -53,6 +54,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
         gestureCount.put(KNOCK, 0);
         gestureCount.put(BUTTTAP, 0);
+        gestureCount.put(CIRCLE, 0);
     }
 
     protected void onResume() {
@@ -75,8 +77,14 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
             //Log.d(DEBUG_TAG, "2 seconds later");
             lastDate = newDate;
             Log.d(DEBUG_TAG, "================================================");
-            MotionDetector.deriveMotion(deltas);
+            String motion = MotionDetector.deriveMotion(deltas);
+            if (motion != null) {
+                gestureCount.put(motion, gestureCount.get(motion) + 1);
+            }
             deltas.clear();
+            gestureCount.put(KNOCK, 0);
+            gestureCount.put(BUTTTAP, 0);
+            gestureCount.put(CIRCLE, 0);
         }
         final float alpha = 0.8f;
 
@@ -101,6 +109,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
         Delta delta = new Delta(deltaX, deltaY, deltaZ);
         deltas.add(delta);
+
 
     }
 
