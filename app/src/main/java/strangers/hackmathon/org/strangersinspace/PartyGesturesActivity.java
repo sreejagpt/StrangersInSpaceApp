@@ -80,6 +80,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
             String motion = MotionDetector.deriveMotion(deltas);
             if (motion != null) {
                 gestureCount.put(motion, gestureCount.get(motion) + 1);
+//                voteForGenre(motion);
             }
             deltas.clear();
             gestureCount.put(KNOCK, 0);
@@ -173,9 +174,13 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
     }
 
-    private void voteForGenre(String genre) {
+    private void voteForGenre(String motion) {
+        Map<String, String> motionToGestures = new HashMap<>();
+        motionToGestures.put(CIRCLE, "rave");
+        motionToGestures.put(KNOCK, "hiphop");
+        motionToGestures.put(BUTTTAP, "funk");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "https://strangers-in-space.herokuapp.com/vote/" + genre;
+        String url = "http://bb355e73.ngrok.io/vote/" + motionToGestures.get(motion);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

@@ -17,18 +17,18 @@ public class MotionDetector {
         }
         Log.d("DEBUG", String.format("%s %s %s", sumX, sumY, sumZ));
 
-        if (Math.abs(sumZ) > 6) {
+        if (Math.abs(sumZ) > 10) {
             Log.d("DEBUG", "BUTTTAP");
             return "BUTTTAP";
+        } else {
+            if (Math.abs(sumX) + Math.abs(sumY) > 15) {
+                Log.d("DEBUG", "KNOCK");
+                return "KNOCK";
+            }
         }
 
-        if (Math.abs(sumX) > 5 && Math.abs(sumY) > 0 && Math.abs(sumZ) < 2) {
-            Log.d("DEBUG", "KNOCK");
-            return "KNOCK";
-        }
 
-
-        if (sumX != 0 && Math.abs(sumY) <= 2 && sumZ != 0) {
+        if (sumX + sumY <= 3 && sumZ != 0) {
             Log.d("DEBUG", "CIRCLE");
             return "CIRCLE";
         }
