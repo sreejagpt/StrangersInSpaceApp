@@ -80,7 +80,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
             String motion = MotionDetector.deriveMotion(deltas);
             if (motion != null) {
                 gestureCount.put(motion, gestureCount.get(motion) + 1);
-//                voteForGenre(motion);
+                voteForGenre(motion);
             }
             deltas.clear();
             gestureCount.put(KNOCK, 0);
@@ -110,64 +110,6 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
         Delta delta = new Delta(deltaX, deltaY, deltaZ);
         deltas.add(delta);
-
-
-    }
-
-//    @Override
-//    public void onSensorChanged(SensorEvent event) {
-//        long newDate = event.timestamp;
-//        if (newDate - lastDate > 2000000000) {
-//            //Log.d(DEBUG_TAG, "2 seconds later");
-//            lastDate = newDate;
-//            if (gestureCount.get(KNOCK) > gestureCount.get(BUTTTAP)) {
-//                Log.d("GESTURE", "KNOCK! ==================" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
-////                voteForGenre("hiphop");
-//            } else if (gestureCount.get(KNOCK) < gestureCount.get(BUTTTAP)) {
-//                Log.d("GESTURE", "BUTT TAP! *****************" + gestureCount.get(KNOCK) + " " + gestureCount.get(BUTTTAP));
-////                voteForGenre("funk");
-//            }
-//            gestureCount.put(KNOCK, 0);
-//            gestureCount.put(BUTTTAP, 0);
-//        } else {
-//            final float alpha = 0.8f;
-//
-//            double[] gravity = new double[3];
-//            double[] linear_acceleration = new double[3];
-//
-//            gravity[0] = alpha * gravity[0] + (1 - alpha) * event.values[0];
-//            gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
-//            gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
-//
-//            linear_acceleration[0] = event.values[0] - gravity[0];
-//            linear_acceleration[1] = event.values[1] - gravity[1];
-//            linear_acceleration[2] = event.values[2] - gravity[2];
-//
-//            double deltaX = linear_acceleration[0] - lastAccelerationX;
-//
-//            double deltaY = linear_acceleration[1] - lastAccelerationY;
-//            double deltaZ = linear_acceleration[2] - lastAccelerationZ;
-//
-//            lastAccelerationX = linear_acceleration[0];
-//            lastAccelerationY = linear_acceleration[1];
-//            lastAccelerationZ = linear_acceleration[2];
-//
-//
-//
-//            if (deltaX > 1 && deltaY > 1 && deltaZ < 10) {
-//                incrementGestureOfType(KNOCK);
-//            } else if (deltaZ > 6) {
-//                incrementGestureOfType(BUTTTAP);
-//            }
-//        }
-//    }
-
-    private void incrementGestureOfType(String gestureType) {
-        int vote = 1;
-        if (gestureType.equals(BUTTTAP)) {
-            vote *= 2;
-        }
-        gestureCount.put(gestureType, gestureCount.get(gestureType) + vote);
     }
 
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -180,7 +122,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
         motionToGestures.put(KNOCK, "hiphop");
         motionToGestures.put(BUTTTAP, "funk");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://bb355e73.ngrok.io/vote/" + motionToGestures.get(motion);
+        String url = "http://localhost:3000/vote/" + motionToGestures.get(motion);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
