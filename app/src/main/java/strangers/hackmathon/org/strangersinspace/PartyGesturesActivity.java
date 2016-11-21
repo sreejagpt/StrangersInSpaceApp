@@ -29,10 +29,9 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
     public static final String KNOCK = "KNOCK";
     public static final String BUTTTAP = "BUTTTAP";
     public static final String CIRCLE = "CIRCLE";
+    public static final String URL = "http://b690df4a.ngrok.io";
     private SensorManager mSensorManager;
-    private Sensor gyroscope;
     private Sensor accelerometer;
-    private float[] mGravity;
 
     private final String DEBUG_TAG = "[DEBUG]";
     Map<String, Integer> gestureCount = new HashMap<>();
@@ -59,7 +58,6 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
 
     protected void onResume() {
         super.onResume();
-        gyroscope = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
         accelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 //        mSensorManager.registerListener(this, gyroscope, SensorManager.SENSOR_DELAY_NORMAL);
         mSensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
@@ -122,7 +120,7 @@ public class PartyGesturesActivity extends AppCompatActivity implements SensorEv
         motionToGestures.put(KNOCK, "hiphop");
         motionToGestures.put(BUTTTAP, "funk");
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://localhost:3000/vote/" + motionToGestures.get(motion);
+        String url = URL + "/vote/" + motionToGestures.get(motion);
 
         // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
